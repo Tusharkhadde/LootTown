@@ -45,7 +45,7 @@
       }
     },
     {
-      "name": "partial-unlinked-and-bot",
+      "name": "incomplete-history-and-bot",
       "communityId": 7002,
       "repositories": [
         { "id": 31, "visibility": "public", "scan": "partial" },
@@ -60,6 +60,46 @@
         "coverage": "partial",
         "people": [{ "githubId": 92001, "eligible": true, "communityCommitCount": null }],
         "excluded": [{ "githubId": 92002, "reason": "bot" }, { "githubId": null, "reason": "unlinked" }]
+      }
+    },
+    {
+      "name": "unresolved-coauthor",
+      "communityId": 7008,
+      "repositories": [{ "id": 101, "visibility": "public", "scan": "complete" }],
+      "observations": [
+        {
+          "repositoryId": 101,
+          "sha": "sha-fixture-009",
+          "authors": [
+            { "githubId": 98001, "kind": "user", "source": "provider-author" },
+            { "githubId": null, "kind": "unresolved-coauthor", "source": "provider-authors-connection" }
+          ]
+        }
+      ],
+      "expected": {
+        "historyCoverage": "complete",
+        "attributionStatus": "unresolved",
+        "people": [{ "githubId": 98001, "eligible": true, "communityCommitCount": 1 }],
+        "unresolvedAttributionCount": 1,
+        "note": "The unresolved co-author is not guessed and does not hide the resolved author's count."
+      }
+    },
+    {
+      "name": "unlinked-repository",
+      "communityId": 7009,
+      "repositories": [
+        { "id": 111, "visibility": "public", "link": "active", "scan": "complete" },
+        { "id": 112, "visibility": "public", "link": "unlinked", "scan": "previously-complete" }
+      ],
+      "observations": [
+        { "repositoryId": 111, "sha": "sha-fixture-010", "authors": [{ "githubId": 99001, "kind": "user" }] },
+        { "repositoryId": 112, "sha": "sha-fixture-011", "authors": [{ "githubId": 99001, "kind": "user" }] }
+      ],
+      "expected": {
+        "coverage": "complete",
+        "activeRepositoryIds": [111],
+        "people": [{ "githubId": 99001, "eligible": true, "communityCommitCount": 1, "earnedAvatarTierPreserved": true }],
+        "note": "The active total excludes sha-fixture-011 from the unlinked repository; the person remains represented and keeps an already-earned tier."
       }
     },
     {
